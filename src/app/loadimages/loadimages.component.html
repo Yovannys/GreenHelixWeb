@@ -1,0 +1,46 @@
+<div class="row">
+ <!--Drop images-->
+  <div class="col-md-4">
+    <!--Using a custom directive-->
+     <div appNgDropFiles
+          [files]="files"
+          (mouseover)="isOverElement=$event" [ngClass]="{'file-over':isOverElement}" class="drop-zone">
+      <h5>Drag and drop your files here</h5>
+      <!--<img src="../../assets/drop-images.png" height="128" width="128"/>-->
+      <img src="../../assets/drop-images.png"/>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <h4>Load files</h4>
+    <button class="btn btn-success" [disabled]="files.length === 0" (click)="saveImages()">Save</button>
+    <button class="btn btn-secondary" [disabled]="files.length === 0" (click)="cleanFiles()">Clean</button>
+    <a href="/protegida" class="btn btn-primary">Cancel</a>
+    <hr style="visibility: hidden">
+     <table class="table">
+        <thead>
+          <tr>
+            <th>File name</th>
+            <th>Size</th>
+            <th>Progress</th>
+          </tr>
+        </thead>
+
+       <tbody>
+          <tr *ngFor="let myfile of files ">
+            <td [ngClass]="{'text-green':myfile.progress >=100}">{{myfile.fileName}}</td>
+            <td>{{myfile.file.size / 1024 / 1024 | number: '.2-2' }}</td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width':myfile.progress +'%' }"></div>
+              </div>
+            </td>
+          </tr>
+       </tbody>
+
+     </table>
+
+  </div>
+
+</div>
+

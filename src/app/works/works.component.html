@@ -1,0 +1,45 @@
+<div class="container container-fluid progress-bar-animated" style="margin-top: 83px">
+  <hr class="my-4.5">
+  <div class="d-flex justify-content-center align-items-center">
+
+    <div style="width: 800px">
+      <h4 align="le"><small> <strong>WORKS</strong> </small></h4>
+      <hr>
+
+      <!--loading images section-->
+
+      <app-loadimages></app-loadimages>
+
+      <!--end loading images section-->
+      <br>
+      <h5><strong>Works List</strong></h5>
+      <hr>
+      <div class="row">
+
+         <div class="card-columns">
+
+           <div class="card" style="width: 18rem;" *ngFor="let items of dataWorks;let i = index">
+
+             <!--Using Pipe Safe to avoid XSS-->
+             <img class="card-img-top rounded" [src]="'data:image/jpg;base64,'+items.afterPhoto|safe" alt="Card image cap">
+
+             <div class="card-body">
+               <p class="card-text">
+                   <span *ngIf="items.showHomePage"><strong>Set In Home Page:  </strong><label STYLE="color: white; background-color: red">Yes</label> | <label><a href="#" (click)="setHome(items.id)">No</a></label></span>
+                   <span *ngIf="!items.showHomePage && !isFullCupFlag"><strong>Set Show Home: </strong><label><a href="#" (click)="setHome(items.id)">No</a></label></span>
+                   <span *ngIf="!items.showHomePage && isFullCupFlag"><strong>Set Show Home: </strong><label>No</label></span>
+                 <br>
+                   <span *ngIf="!!items.date">Date: {{items.date | date: 'dd/MM/yyyy'}}</span>
+                   <br>
+                   <a href="#" (click)="deleteWork(items.id)">Delete</a>
+               </p>
+             </div>
+           </div>
+
+
+         </div>
+
+      </div>
+      <a href="/protegida" class="btn btn-primary">Back</a>
+</div>
+

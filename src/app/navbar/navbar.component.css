@@ -1,0 +1,20 @@
+.text-color-nav-item {
+  color: black;
+  font-family: 'Merriweather', serif;
+  font-size: 17px;
+}
+
+.navbar-font-title{
+  color: black;
+  font-family: 'Joti One', cursive;
+  font-size: 39px;
+}
+
+.navbar-custom {
+  background-color: #c7ff92;
+}
+
+.bg-nav-container{
+  background-color:  #c7ff92;
+}
+

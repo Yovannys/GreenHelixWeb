@@ -1,0 +1,98 @@
+<div class="container container-fluid" style="margin-top: 83px">
+  <hr class="my-4.5">
+  <div class="d-flex justify-content-center align-items-center">
+
+      <div style="width: 600px">
+        <h4 align="le"><small> <strong>PROFILE</strong> </small></h4>
+        <hr>
+
+        <form [formGroup] = "form" (ngSubmit)="onSubmit($event)">
+          <div class="form-group-fields" formGroupName="myprofile">
+
+            <!--Titulo-->
+
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input id="title"
+                     formControlName="title"
+                     class="form-control"
+                     placeholder="Title"
+                     [ngClass]="{'is-invalid': form.get('myprofile.title').errors}" />
+
+              <!-- Showing messages valitation title-->
+              <div class="invalid-feedback" *ngIf="form.get('myprofile.title').errors">
+
+                <div *ngIf="isRequired('title')">First Name is required.</div>
+                <div *ngIf="form.get('myprofile.title').hasError('minlength')">At least 2 characters.</div>
+                <div *ngIf="form.get('myprofile.title').hasError('maxlength')">Until 35 characters.</div>
+                <div *ngIf="form.get('myprofile.title').errors?.pattern">Only alphanumerics characters.</div>
+
+              </div>
+
+            </div>
+
+            <!--description-->
+
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea  id="description"
+                         cols="80"
+                         rows="4"
+                         formControlName="description"
+                         class="form-control"
+                         placeholder="description"
+                         [ngClass]="{'is-invalid': form.get('myprofile.description').errors}"></textarea>
+
+              <!-- Showing description valitation description-->
+              <div class="invalid-feedback" *ngIf="form.get('myprofile.description').errors">
+
+                <div *ngIf="isRequired('description')">Description is required.</div>
+
+              </div>
+            </div>
+
+            <!--Other Services-->
+
+            <div class="form-group">
+              <label for="another_services">Other services:</label>
+              <textarea  id="another_services"
+                         cols="80"
+                         rows="4"
+                         formControlName="another_services"
+                         class="form-control"
+                         placeholder="another_services"
+                         [ngClass]="{'is-invalid': form.get('myprofile.another_services').errors}"></textarea>
+            </div>
+
+            <!--URL-->
+
+            <div class="form-group">
+              <label for="url">URL:</label>
+              <input id="url"
+                     formControlName="url"
+                     class="form-control"
+                     placeholder="URL"
+                     [ngClass]="{'is-invalid': form.get('myprofile.url').errors}" />
+
+              <!-- Showing messages valitation url-->
+              <div class="invalid-feedback" *ngIf="form.get('myprofile.url').errors">
+                <!--<div *ngIf="form.get('myprofile.url').hasError('url')">Url is invalid.</div>-->
+                <div *ngIf="form.get('myprofile.url').errors?.pattern">Url is invalid.</div>
+              </div>
+
+            </div>
+
+            <button [disabled]="form.invalid" class="btn btn-success" (click)="save()">Save</button>
+
+            <button [disabled]="form.invalid" class="btn btn-success" (click)="saveAndContinue()">Save and manage works</button>
+
+            <a href="/home" class="btn btn-primary">Cancel</a>
+
+          </div>
+
+        </form>
+
+      </div>
+  </div>
+</div>
+

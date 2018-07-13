@@ -1,0 +1,91 @@
+<div class="container mb-5">
+    <hr>
+
+  <!--Loop init-->
+
+     <div class="row" *ngFor="let items of dataProf;let i = index">
+      <!-- Articulos-->
+      <div class="col-12 col-md-9">
+        <div class="row mb-5">
+           <div class="col-3">
+             <!--<img src="#" alt="" class="img-fluid">-->
+             <p class="lead text-center">{{ items.profile.works.date | date: 'dd/MM/yyyy' }}</p>
+           </div>
+          <div class="col-5">
+            <a href="/protegida" *ngIf="items.profile.id === sessionProfileId"> <h3 *ngIf="items.profile.title && this.auth.isAuthenticated()">{{ items.profile.title }}</h3> </a>
+
+            <h3 *ngIf="items.profile.title && this.auth.isAuthenticated() && items.profile.id != sessionProfileId">{{ items.profile.title }}</h3>
+
+            <h3 *ngIf="items.profile.title && !this.auth.isAuthenticated()">{{ items.profile.title }}</h3>
+
+            <a [href]="items.profile.url" *ngIf="items.profile.url">Visit my website</a>
+            <br *ngIf="items.profile.url">
+            <!--<a href="#" class="badge badge-success">Like</a>-->
+            <!-- Like-->
+            <a href="" (click)="setLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
+              <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            </a>
+
+            <label>{{items.profile.score}}</label>
+            <label>  </label>
+
+            <!-- UnLike-->
+            <a href="" (click)="setUnLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
+              <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            </a>
+
+            <label>{{items.profile.unscore}}</label>
+
+            <p *ngIf="items.profile.description">
+              {{ items.profile.description }}
+            </p>
+
+            <!--collapse-->
+            <div *ngIf="!!items.profile.anotherServices">
+              <p><a class="btn btn-warning btn-sm" (click)="hideme[i] = !hideme[i]">Other services...</a></p>
+
+              <div class="card card-body" [hidden]="!hideme[i]">{{ items.profile.anotherServices }}</div>
+            </div>
+            <!--collapse-->
+
+          </div>
+          <div class="col-2"></div>
+          <div class="col-1">
+            <!--<img src="#" alt="" class="img-fluid">-->
+            <p class="text-center">
+              <img [src]="'data:image/jpg;base64,'+items.profile.works.beforePhoto" class="rounded float-right" height="150" width="150" alt="Before" *ngIf="items.profile.works.beforePhoto!=null">
+            </p>
+          </div>
+           <div class="col-1">
+            <!--<img src="#" alt="" class="img-fluid">-->
+            <p class="text-center">
+              <img [src]="'data:image/jpg;base64,'+items.profile.works.afterPhoto" class="rounded" height="150" width="150" alt="After" *ngIf="items.profile.works.afterPhoto!=null">
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Aside: Son las columnas que pueden ir a la derecha para publicidad, etc-->
+     <!-- <div class="col-12 col-md-3">
+        Advertisement
+
+      </div>-->
+
+      <hr align="center" width="97%">
+
+    </div>
+
+  <!--Loop end-->
+
+  <!--pagination-->
+  <ul class="nav nav-pills" *ngIf="!this.searchButtonPressed">
+      <li class="nav-item" *ngFor="let p of pages; let i=index">
+         <a class="nav-link" href="" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}"> {{i}} </a>
+      </li>
+  </ul>
+
+  <a href="/home" class="btn btn-primary" *ngIf="this.searchButtonPressed">Back</a>
+
+
+</div>

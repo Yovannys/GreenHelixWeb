@@ -1,0 +1,6 @@
+.slide {
+  background: url("../../assets/bg-jumbo.png");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}

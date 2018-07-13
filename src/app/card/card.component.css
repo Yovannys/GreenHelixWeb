@@ -1,0 +1,8 @@
+.nav-item > a.active{
+  background-color: green;
+  color: white;
+ }
+
+.nav-item > a:link{
+  color: black;
+}
