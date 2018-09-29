@@ -6,16 +6,17 @@
           [files]="files"
           (mouseover)="isOverElement=$event" [ngClass]="{'file-over':isOverElement}" class="drop-zone">
       <h5>Drag and drop your files here</h5>
-      <!--<img src="../../assets/drop-images.png" height="128" width="128"/>-->
-      <img src="../../assets/drop-images.png"/>
+      <img src="../../assets/drop-images.png" height="128" width="128"/>
+      <!--<img src="http://142.93.92.179:8080/greenHelixGarden/assets/drop-images.png"/>-->
+
     </div>
   </div>
 
   <div class="col-md-8">
     <h4>Load files</h4>
-    <button class="btn btn-success" [disabled]="files.length === 0" (click)="saveImages()">Save</button>
-    <button class="btn btn-secondary" [disabled]="files.length === 0" (click)="cleanFiles()">Clean</button>
     <a href="/protegida" class="btn btn-primary">Cancel</a>
+    <button class="btn btn-secondary" [disabled]="files.length === 0" (click)="cleanFiles()">Clean</button>
+    <button class="btn btn-success" [disabled]="files.length === 0" (click)="saveImages()">Save</button>
     <hr style="visibility: hidden">
      <table class="table">
         <thead>

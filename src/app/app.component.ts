@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./service/auth.service";
+import {ScrollTopService} from "./service/scroll-top.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,11 @@ import {AuthService} from "./service/auth.service";
 export class AppComponent {
   title = 'app';
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, public scrollTopService:ScrollTopService ) {
     auth.handleAuthentication();
+  }
+
+  ngOnInit() {
+    this.scrollTopService.setScrollTop();
   }
 }

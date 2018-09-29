@@ -28,6 +28,15 @@ import { LoadimagesComponent } from './loadimages/loadimages.component';
 import { NgDropFilesDirective } from './directives/ng-drop-files.directive';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { RequestContactComponent } from './request-contact/request-contact.component';
+import { AllworkComponent } from './allwork/allwork.component';
+import { MyDatePickerModule } from 'mydatepicker';
+import {ToastyModule} from 'ng2-toasty';
+import { NgxEditorModule } from 'ngx-editor';
+import {ScrollTopService} from "./service/scroll-top.service";
+import {MyAppErrorHandlerService} from "./service/my-app-error-handler.service";
+import { CommentsComponent } from './comments/comments.component';
+import {PostService} from "./service/post.service";
 
 
 @NgModule({
@@ -46,6 +55,9 @@ import { SafePipe } from './pipes/safe.pipe';
     NgDropFilesDirective,
     NotFoundComponent,
     SafePipe,
+    RequestContactComponent,
+    AllworkComponent,
+    CommentsComponent,
 
 
   ],
@@ -55,6 +67,9 @@ import { SafePipe } from './pipes/safe.pipe';
     FormsModule,
     TextMaskModule ,
     ReactiveFormsModule,
+    MyDatePickerModule,
+    NgxEditorModule,
+    ToastyModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
   providers: [AuthService,
@@ -62,8 +77,11 @@ import { SafePipe } from './pipes/safe.pipe';
               HttpService,
               AuthGuardGuard,
               ContactService,
+              PostService,
               ComunicateService,
               UserProfileService,
+              ScrollTopService,
+              MyAppErrorHandlerService,
               LoadImagesService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

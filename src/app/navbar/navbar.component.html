@@ -1,63 +1,52 @@
-<div class="container-fluid fixed-top bg-nav-container text-center">
-  <!-- usando la clase container en el tag nav para crear un container dentro-->
-  <!--fixed-top hace que la barra sea fija-->
-<nav class="navbar navbar-expand-sm navbar-custom">
+<!--Menu-->
+    <div class="container-fluid bg-dark fixed-top text-center">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light container navbar-dark bg-dark">
 
-  <a class="navbar-brand navbar-font-title" href="index.html">
-    <img src="../../assets/logo2.svg" width="55" height="55" class="d-inline-block align-top mr-3" alt="GREEN HELIX">
-   <!--<img src="../../assets/logo.png"/>-->
-    GREEN HELIX
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom" aria-controls="navbarCustom" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fa fa-bars fa-lg py-1 text-white"></i>
-  </button>
-  <!-- Menu -->
-  <div class="navbar-collapse collapse" id="navbarCustom">
-    <div class="d-flex justify-content-end  align-items-center">
-      <!--<a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>-->
+        <!--<a class="navbar-brand" href="#">Navbar</a>-->
 
-      <!--<a class="nav-item nav-link" href="#">About</a>-->
-      <!--Aplicando margen para separar un poco los botones-->
-      <a class="nav-item nav-link text-color-nav-item" [routerLink]="['home']">Home</a>
-      <a class="nav-item nav-link text-color-nav-item" *ngIf="this.auth.isAuthenticated()" [routerLink]="['protegida']">My Profile</a>
-      <a class="nav-item nav-link text-color-nav-item" [routerLink]="['contacto']">Contact</a>
-      <a class="nav-item nav-link mr-md-4 text-color-nav-item" [routerLink]="['about']">About</a>
+        <!--Logo-->
+        <a class="navbar-brand navbar-font-title " href="index.html">
+          <!--<img src="http://142.93.92.179:8080/greenHelixGarden/assets/logo2.svg" width="55" height="55" class="d-inline-block align-top mr-3" alt="GREEN HELIX">-->
+          <img src="../../assets/logo2.svg" width="55" height="55" class="d-inline-block align-top " alt="Power Business GO"/>
+          <span style="color: white">Power Business</span> <span style="color: green"><strong>GO</strong></span>
+        </a>
+        <!--End logo-->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!--ml auto: aligning menu to right -->
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link text-color-nav-item" [routerLink]="['home']" (click)="onGoHome();">Home</a>
+            <a class="nav-item nav-link text-color-nav-item" *ngIf="this.auth.isAuthenticated()" [routerLink]="['protegida']">Profile</a>
+            <a class="nav-item nav-link text-color-nav-item" [routerLink]="['contacto']">Contact</a>
+            <!--mr-4 space betwen buttons-->
+            <a class="nav-item nav-link mr-md-4 text-color-nav-item mr-4" [routerLink]="['about']">About</a>
+
+            <!--Login/Logout-->
+            <div class="d-flex align-items-center mr-3">
+              <button (click)="login()"
+                      *ngIf="!this.auth.isAuthenticated()"
+                      type="button"
+                      class="btn btn-success btn-sm">Sign In</button>
+
+              <button (click)="salir()"
+                      *ngIf="this.auth.isAuthenticated()"
+                      type="button"
+                      class="btn btn-success btn-sm">Log Out</button>
+
+            </div>
+
+            <div *ngIf="profile!=null" style="color: white">
+              {{ profile.given_name | uppercase}} &#160;  <img [src]="profile.picture" class="rounded" height="42" width="42">
+            </div>
+
+
+
+          </div>
+        </div>
+      </nav>
     </div>
-  </div>
-
-  <!--Profile-->
-
-  <div class="float-sm-right" *ngIf="profile!=null" style="width: 115px;">
-    <!--{{ localStorage.getItem('userProfile').name }}-->
-    <!--<img [src]="profile.picture" class="rounded">-->
-
-    <table>
-      <tr>
-        <th colspan="2">WELCOME</th>
-      </tr>
-      <tr>
-        <td>{{ profile.family_name}}</td>
-        <td rowspan="2"><img [src]="profile.picture" class="rounded" height="42" width="42"></td>
-      </tr>
-      <tr>
-        <td>{{ profile.given_name}}</td>
-      </tr>
-    </table>
-  </div>
-
-  <!--Botones-->
-  <div class="float-sm-right">
-    <button (click)="login()"
-            *ngIf="!this.auth.isAuthenticated()"
-            type="button"
-            class="btn btn-success btn-sm">Sign In</button>
-
-    <button (click)="salir()"
-            *ngIf="this.auth.isAuthenticated()"
-            type="button"
-            class="btn btn-success btn-sm">Log Out</button>
-
-  </div>
-
-</nav>
-</div>
+<!--Fin Menu-->

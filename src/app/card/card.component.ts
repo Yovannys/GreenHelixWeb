@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+declare var require: any;
+import {Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {DomSanitizer} from '@angular/platform-browser';
 import {SliderComponent} from "../slider/slider.component";
 import {ComunicateService} from "../service/comunicate.service";
 import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
-
 
 @Component({
   selector: 'app-card',
@@ -16,6 +16,8 @@ export class CardComponent implements OnInit {
 
   private page: number = 0;
 
+  public countPost: any;
+
   //DomSanitizer helps preventing Cross Site Scripting Security bugs (XSS) by sanitizing values to be safe to use in the
   // different DOM contexts.
   private sanitizer: DomSanitizer;
@@ -24,14 +26,13 @@ export class CardComponent implements OnInit {
 
   dataProf: Array<any>;
   pages: Array<number>;
-
   datasearch : any;
 
   hideme=[];
 
   sessionProfileId : any;
-
   searchButtonPressed : boolean = false;
+
 
    constructor(public _authenticationService: AuthenticationService, public _comunicate: ComunicateService, public auth: AuthService, private _router: Router) {
     if (this.datasearch == null || this.datasearch == undefined ){
@@ -48,21 +49,50 @@ export class CardComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  goRequestContact(user: any){
+    // console.log("before emitting : ",profile);
+    this._comunicate.onUserReqServ = user;
+    this._router.navigate(['/requestContact']);
+  }
 
-    this.showAllItems ();
-    this.showSearch();
+  goRequestPost(user: any){
+    // console.log("before emitting : ",profile);
+    this._comunicate.onPostReqServ = user;
+    //console.log("User before emitting : ",user);
+    this._router.navigate(['/comments']);
+  }
+
+
+
+  ngOnInit() {
 
     this.auth.refreshComponet.subscribe(
       (datasearch : any)=>{
 
-         this.setSessionProfileId()
-         this.showAllItems ();
+        //console.log("Authtenticantion True");
+
+        this.setSessionProfileId();
+        this.showAllItems ();
+
       },
       err => {
         console.error(err);
       }
     )
+
+    this._comunicate.onvalidateWorkCompleted.subscribe(
+      (data : any)=>{
+        this.showAllItems ();
+       // this._router.navigate(['/home']);
+
+      }
+    )
+
+    this.showAllItems ();
+    this.showSearch();
+
+
+
   }
 
   generateID():string{
@@ -120,14 +150,40 @@ export class CardComponent implements OnInit {
     this._authenticationService.getHomeProfiles(this.page).subscribe(
       (data) => {
 
-        this.dataProf = data.data;
-        this.pages = new Array(data.total_pages);
+        if (data!=null){
+
+          JSON.stringify(data.data);
+
+          this.dataProf = data.data;
+          this.pages = new Array(data.total_pages);
+
+          //
+          for (let item of this.dataProf) {
+
+            //console.log("Elementos : "+item);
+              // if(item.profile.accessfirstTime){
+              //   this._router.navigate(['/protegida']);
+              //   break;
+              // }
+          }
+
+        }else{
+          this.dataProf = null;
+          this._router.navigate(['/protegida']);
+        }
+
+
+       },
+      err => {
+        this.dataProf = null;
 
       },
-      err => {
-        console.error(err);
-      },
-      () => {});
+      () => {
+        // if (this.dataProf == null){
+        //   this._router.navigate(['/protegida']);
+        // }
+
+      });
   }
 
   showSearch (){
@@ -137,9 +193,9 @@ export class CardComponent implements OnInit {
           //any action
             this.searchButtonPressed = true;
             this.datasearch = datasearch;
-            console.log("Receiving datasearch from Search Component : ", this.datasearch);
+            //console.log("Receiving datasearch from Search Component : ", this.datasearch);
             this.dataProf = this.datasearch;
-            console.log("Assing datasearch to dataProf : ", this.dataProf);
+           // console.log("Assing datasearch to dataProf : ", this.dataProf);
 
             if (this.datasearch==null){
               this.showAllItems ();
@@ -149,6 +205,18 @@ export class CardComponent implements OnInit {
 
         }
       )
+  }
+
+  onGoAllworks(user : any){
+    this._comunicate.onUserReqServ = user;
+
+    const profileid = localStorage.getItem('profileid');
+    if (!profileid){
+      localStorage.setItem('profileid', user.profile.id);
+    }
+
+    this._router.navigate(['/allworks']);
+
   }
 
 }

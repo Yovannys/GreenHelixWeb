@@ -36,4 +36,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.auth.login();
   }
 
+  onGoHome(){
+    localStorage.removeItem('profileid');
+  }
+
 }

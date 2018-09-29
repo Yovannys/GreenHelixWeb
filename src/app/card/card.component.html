@@ -1,91 +1,135 @@
-<div class="container mb-5">
+<div class="container">
     <hr>
 
   <!--Loop init-->
 
-     <div class="row" *ngFor="let items of dataProf;let i = index">
-      <!-- Articulos-->
-      <div class="col-12 col-md-9">
-        <div class="row mb-5">
-           <div class="col-3">
-             <!--<img src="#" alt="" class="img-fluid">-->
-             <p class="lead text-center">{{ items.profile.works.date | date: 'dd/MM/yyyy' }}</p>
-           </div>
-          <div class="col-5">
-            <a href="/protegida" *ngIf="items.profile.id === sessionProfileId"> <h3 *ngIf="items.profile.title && this.auth.isAuthenticated()">{{ items.profile.title }}</h3> </a>
-
-            <h3 *ngIf="items.profile.title && this.auth.isAuthenticated() && items.profile.id != sessionProfileId">{{ items.profile.title }}</h3>
-
-            <h3 *ngIf="items.profile.title && !this.auth.isAuthenticated()">{{ items.profile.title }}</h3>
-
-            <a [href]="items.profile.url" *ngIf="items.profile.url">Visit my website</a>
-            <br *ngIf="items.profile.url">
-            <!--<a href="#" class="badge badge-success">Like</a>-->
-            <!-- Like-->
-            <a href="" (click)="setLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
-              <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            </a>
-
-            <label>{{items.profile.score}}</label>
-            <label>  </label>
-
-            <!-- UnLike-->
-            <a href="" (click)="setUnLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
-              <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-            </a>
-
-            <label>{{items.profile.unscore}}</label>
-
-            <p *ngIf="items.profile.description">
-              {{ items.profile.description }}
-            </p>
-
-            <!--collapse-->
-            <div *ngIf="!!items.profile.anotherServices">
-              <p><a class="btn btn-warning btn-sm" (click)="hideme[i] = !hideme[i]">Other services...</a></p>
-
-              <div class="card card-body" [hidden]="!hideme[i]">{{ items.profile.anotherServices }}</div>
-            </div>
-            <!--collapse-->
-
-          </div>
-          <div class="col-2"></div>
-          <div class="col-1">
-            <!--<img src="#" alt="" class="img-fluid">-->
-            <p class="text-center">
-              <img [src]="'data:image/jpg;base64,'+items.profile.works.beforePhoto" class="rounded float-right" height="150" width="150" alt="Before" *ngIf="items.profile.works.beforePhoto!=null">
-            </p>
-          </div>
-           <div class="col-1">
-            <!--<img src="#" alt="" class="img-fluid">-->
-            <p class="text-center">
-              <img [src]="'data:image/jpg;base64,'+items.profile.works.afterPhoto" class="rounded" height="150" width="150" alt="After" *ngIf="items.profile.works.afterPhoto!=null">
-            </p>
-          </div>
+  <div *ngIf="dataProf==null">
+     <h4 style="margin-left: 510px"><label style="color: green"><strong>Loading</strong></label></h4>
+      <div class="text-center">
+        <div class="sk-cube-grid">
+          <div class="sk-cube sk-cube1"></div>
+          <div class="sk-cube sk-cube2"></div>
+          <div class="sk-cube sk-cube3"></div>
+          <div class="sk-cube sk-cube4"></div>
+          <div class="sk-cube sk-cube5"></div>
+          <div class="sk-cube sk-cube6"></div>
+          <div class="sk-cube sk-cube7"></div>
+          <div class="sk-cube sk-cube8"></div>
+          <div class="sk-cube sk-cube9"></div>
         </div>
-
       </div>
+  </div>
 
-      <!-- Aside: Son las columnas que pueden ir a la derecha para publicidad, etc-->
-     <!-- <div class="col-12 col-md-3">
-        Advertisement
+  <div *ngIf="dataProf!=null">
+     <div class="row" *ngFor="let items of dataProf;let i = index">
+       <!-- Articulos-->
 
-      </div>-->
+           <!--Signed-->
+           <div class="col-12 col-md-2">
+             <p class="lead text-center" *ngIf="items.profile.signed!=null"><strong>Signed:</strong> {{ items.profile.signed | date: 'MM/dd/yyyy' }}</p>
+             <p class="lead text-center" *ngIf="items.profile.signed==null"></p>
+           </div>
 
+           <!--order-->
+           <div class="col-12 col-md-1">
+             <a (click)="goRequestContact(items)" data-toggle="tooltip" data-placement="top" title="Create a service request." class="cursor-pointer">
+               <img src="http://localhost:8080/assets/call1.png" height="25" width="25" alt="Request my services"/> <strong>Order</strong>
+             </a>
+           </div>
+
+           <!--title-->
+           <div class="col-12 col-md-5 mb-3">
+             <a href="/protegida" *ngIf="items.profile.id === sessionProfileId"> <h3 *ngIf="items.profile.title && this.auth.isAuthenticated()">{{ items.profile.title }}</h3> </a>
+
+             <h3 *ngIf="items.profile.title && this.auth.isAuthenticated() && items.profile.id != sessionProfileId">{{ items.profile.title }}</h3>
+
+             <h3 *ngIf="items.profile.title && !this.auth.isAuthenticated()">{{ items.profile.title }}</h3>
+
+             <!--Address-->
+             <label *ngIf="items.profile.address!=null"><i>{{items.profile.address}}</i></label> <br>
+
+             <a [href]="items.profile.url" *ngIf="items.profile.url">Visit my website</a>
+             <br *ngIf="items.profile.url">
+             <!--<a href="#" class="badge badge-success">Like</a>-->
+             <!-- Like-->
+             <a href="" (click)="setLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
+               <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+             </a>
+
+             <label>{{items.profile.score}}</label>
+             <label>  </label>
+
+             <!-- UnLike-->
+             <a href="" (click)="setUnLike(items.profile.id, $event)" *ngIf="items.profile.title" style="color: black">
+               <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+             </a>
+
+             <label>{{items.profile.unscore}}</label>
+             <label></label>
+             <label style="color:green">
+               <strong><a (click)="goRequestPost(items)" title="All Comments." class="cursor-pointer">Comments ({{items.profile.postCount}})</a></strong>
+             </label>
+
+             <p *ngIf="items.profile.description">
+               {{ items.profile.description }}
+             </p>
+
+             <!--collapse-->
+             <div *ngIf="!!items.profile.anotherServices">
+               <p><a class="btn btn-warning btn-sm" (click)="hideme[i] = !hideme[i]">Services</a></p>
+
+               <div class="card card-body" [hidden]="!hideme[i]" [innerHTML]="items.profile.anotherServices"></div>
+             </div>
+             <label *ngIf="!items.profile.anotherServices"></label>
+           </div>
+
+           <!--images-->
+           <div class="col-12 col-md-4">
+               <div class="row">
+                  <div class="col-6">
+                    <a (click)="onGoAllworks(items);" class="cursor-pointer">
+
+                        <img [src]="'data:image/jpg;base64,'+items.profile.works.beforePhoto|safe"
+                             class="img-fluid rounded"
+                             *ngIf="items.profile.works.beforePhoto!=null"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             title="All my works uploaded">
+
+                    </a>
+                    <p class="lead text-center d-none d-md-block"><strong>Uploaded: </strong>{{ items.profile.works.date | date: 'MM/dd/yyyy' }}</p>
+                  </div>
+                  <div class="col-6">
+                    <a (click)="onGoAllworks(items);" class="cursor-pointer">
+
+                        <img [src]="'data:image/jpg;base64,'+items.profile.works.afterPhoto|safe"
+                             class="img-fluid rounded"
+                             *ngIf="items.profile.works.afterPhoto!=null"
+                             data-toggle="tooltip"
+                             data-placement="top"
+                             title="All my works uploaded">
+
+                    </a>
+                    <p class="lead text-center d-none d-md-block"><strong>Uploaded: </strong>{{ items.profile.works.date | date: 'MM/dd/yyyy' }}</p>
+                  </div>
+               </div>
+           </div>
+       <!-- End Articulos-->
       <hr align="center" width="97%">
 
     </div>
-
+  </div>
   <!--Loop end-->
 
   <!--pagination-->
-  <ul class="nav nav-pills" *ngIf="!this.searchButtonPressed">
+  <div class="mb-3">
+    <ul class="nav nav-pills" *ngIf="!this.searchButtonPressed">
       <li class="nav-item" *ngFor="let p of pages; let i=index">
-         <a class="nav-link" href="" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}"> {{i}} </a>
+        <a class="nav-link" href="" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}"> {{i}} </a>
       </li>
-  </ul>
+    </ul>
+  </div>
 
-  <a href="/home" class="btn btn-primary" *ngIf="this.searchButtonPressed">Back</a>
-
-
+  <a href="/home" class="btn btn-primary" *ngIf="this.searchButtonPressed">Go Home</a>
+  <br>
 </div>

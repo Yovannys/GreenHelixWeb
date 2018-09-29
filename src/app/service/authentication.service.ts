@@ -34,7 +34,6 @@ export class AuthenticationService {
     return this._http.get(url, auth0token);
   }
 
-
   public getBackEndProfile(user: Users, auth0token: string): Observable<Response> {
     const url = `${this.apiBaseURL}/api/users/getProfile/`;
     return this._http.post(url, user, auth0token);

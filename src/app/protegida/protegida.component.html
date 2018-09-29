@@ -1,6 +1,5 @@
-<div class="container container-fluid" style="margin-top: 83px">
-  <hr class="my-4.5">
-  <div class="d-flex justify-content-center align-items-center">
+<div class="container container-fluid" style="margin-top: 160px">
+   <div class="d-flex justify-content-center align-items-center">
 
       <div style="width: 600px">
         <h4 align="le"><small> <strong>PROFILE</strong> </small></h4>
@@ -17,17 +16,51 @@
                      formControlName="title"
                      class="form-control"
                      placeholder="Title"
-                     [ngClass]="{'is-invalid': form.get('myprofile.title').errors}" />
+                     [ngClass]="{'is-invalid': form.get('myprofile.title').errors}"
+                     data-toggle="tooltip" data-placement="top" title="You can type the business title."/>
 
               <!-- Showing messages valitation title-->
               <div class="invalid-feedback" *ngIf="form.get('myprofile.title').errors">
 
-                <div *ngIf="isRequired('title')">First Name is required.</div>
+                <div *ngIf="isRequired('title')">Title is required.</div>
                 <div *ngIf="form.get('myprofile.title').hasError('minlength')">At least 2 characters.</div>
                 <div *ngIf="form.get('myprofile.title').hasError('maxlength')">Until 35 characters.</div>
                 <div *ngIf="form.get('myprofile.title').errors?.pattern">Only alphanumerics characters.</div>
 
               </div>
+            </div>
+
+            <!--Signed-->
+
+            <div class="form-group">
+              <label for="myDate">Signed Date:</label>
+
+              <my-date-picker id="myDate"
+                name="mydate"
+                formControlName="myDate"
+                [options]="myDatePickerOptions"
+                #mydp="mydatepicker"
+                (dateChanged)="onDateChanged($event)"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="You can select the date of sign.">
+              </my-date-picker>
+
+              <!-- Showing messages valitation title-->
+
+              <div>
+                <p *ngIf="form.get('myprofile.myDate').errors?.required">
+
+                  <span style="color: red;font-size: small">Date is required!</span>
+                </p>
+              </div>
+
+
+              <!--<div *ngIf="form.get('myprofile.myDate').errors" class="text-danger">-->
+                <!--<div [hidden]="!actualstartdate.errors.required">-->
+                  <!--Required-->
+                <!--</div>-->
+              <!--</div>-->
 
             </div>
 
@@ -41,7 +74,8 @@
                          formControlName="description"
                          class="form-control"
                          placeholder="description"
-                         [ngClass]="{'is-invalid': form.get('myprofile.description').errors}"></textarea>
+                         [ngClass]="{'is-invalid': form.get('myprofile.description').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type the description business."></textarea>
 
               <!-- Showing description valitation description-->
               <div class="invalid-feedback" *ngIf="form.get('myprofile.description').errors">
@@ -54,14 +88,61 @@
             <!--Other Services-->
 
             <div class="form-group">
-              <label for="another_services">Other services:</label>
-              <textarea  id="another_services"
-                         cols="80"
-                         rows="4"
-                         formControlName="another_services"
-                         class="form-control"
-                         placeholder="another_services"
-                         [ngClass]="{'is-invalid': form.get('myprofile.another_services').errors}"></textarea>
+              <label for="another_services">Services:</label>
+              <app-ngx-editor [placeholder]="'Enter text here...'"
+                              id="another_services"
+                              height="100px"
+                              minHeight="50px"
+                              [spellcheck]="true"
+                              formControlName="another_services"
+                              [ngClass]="{'is-invalid': form.get('myprofile.another_services').errors}"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="You can type other services you offer."></app-ngx-editor>
+
+              <div class="ngx-editor-message" *ngIf="form.get('myprofile.another_services').errors?.required">
+                <span style="color: red;font-size: small">Services is required!</span>
+              </div>
+
+            </div>
+
+            <!--Phone-->
+
+            <div class="form-group">
+              <label for="phone">Contact phone:</label>
+              <input id="phone"
+                     formControlName="phone"
+                     class="form-control"
+                     [(ngModel)]="modelWithValue"
+                     [textMask]="{mask: mask}"
+                     [ngClass]="{'is-invalid': form.get('myprofile.phone').errors}"
+                     data-toggle="tooltip" data-placement="top" title="You can type your phone number."/>
+
+              <div class="invalid-feedback" *ngIf="form.get('myprofile.phone').errors">
+                <div *ngIf="isRequired('phone')">Phone is required.</div>
+              </div>
+
+            </div>
+
+            <!--Address-->
+
+            <div class="form-group">
+              <label for="address">Work Area:</label>
+              <input id="address"
+                     formControlName="address"
+                     class="form-control"
+                     placeholder="You can type any area (city, state, full address) you work."
+                     [ngClass]="{'is-invalid': form.get('myprofile.address').errors}"
+                     data-toggle="tooltip" data-placement="top" title="You can type any area (city, state, full address) you work."/>
+
+              <!-- Showing messages valitation title-->
+              <div class="invalid-feedback" *ngIf="form.get('myprofile.address').errors">
+
+                <div *ngIf="isRequired('address')">Work Area is required.</div>
+                <div *ngIf="form.get('myprofile.address').errors?.pattern">Only alphanumerics characters.</div>
+
+              </div>
+
             </div>
 
             <!--URL-->
@@ -72,7 +153,8 @@
                      formControlName="url"
                      class="form-control"
                      placeholder="URL"
-                     [ngClass]="{'is-invalid': form.get('myprofile.url').errors}" />
+                     [ngClass]="{'is-invalid': form.get('myprofile.url').errors}"
+                     data-toggle="tooltip" data-placement="top" title="You can type your personal web site url."/>
 
               <!-- Showing messages valitation url-->
               <div class="invalid-feedback" *ngIf="form.get('myprofile.url').errors">
@@ -82,15 +164,18 @@
 
             </div>
 
+            <a href="/home" class="btn btn-primary" *ngIf="showsucess"> Go Home</a>
+            <a href="/home" class="btn btn-primary" *ngIf="!showsucess">Cancel</a>
+
             <button [disabled]="form.invalid" class="btn btn-success" (click)="save()">Save</button>
 
             <button [disabled]="form.invalid" class="btn btn-success" (click)="saveAndContinue()">Save and manage works</button>
 
-            <a href="/home" class="btn btn-primary">Cancel</a>
-
           </div>
-
         </form>
+
+        <br>
+          <ng2-toasty></ng2-toasty>
 
       </div>
   </div>

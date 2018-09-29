@@ -4,6 +4,7 @@ import {HttpService} from "./http.service";
 import {Observable} from "rxjs/Observable";
 import {Config} from "../config";
 import {Users} from "../models/Users";
+import {Works} from "../models/Works";
 
 @Injectable()
 export class UserProfileService {
@@ -38,5 +39,16 @@ export class UserProfileService {
     const url = `${this.apiBaseURL}/api/profile/works/isFullCup?id=${id}`;
     return this._http.get(url, auth0token);
   }
+
+  public findallWorks(idprofile: number): Observable<Response> {
+    const url = `${this.apiBaseURL}/api/profile/works/findAll?idprofile=${idprofile}`;
+    return this._http.get(url);
+  }
+
+  public onValidateShowHome(idprofile: number, auth0token: string): Observable<Boolean> {
+    const url = `${this.apiBaseURL}/api/profile/works/validateShowHome?idprofile=${idprofile}`;
+    return this._http.get(url, auth0token);
+  }
+
 
 }

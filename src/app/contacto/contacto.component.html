@@ -1,5 +1,5 @@
-<div class="container container-fluid" style="margin-top: 83px">
-   <hr class="my-4.5">
+<div class="container container-fluid" style="margin-top: 115px">
+
        <div class="d-flex justify-content-center align-items-center">
            <div>
 
@@ -14,7 +14,8 @@
                             formControlName="firstname"
                             class="form-control"
                             placeholder="First name"
-                            [ngClass]="{'is-invalid': form.get('contact.firstname').errors}" />
+                            [ngClass]="{'is-invalid': form.get('contact.firstname').errors}"
+                            data-toggle="tooltip" data-placement="top" title="You can type the first name."/>
 
                      <!-- Showing messages valitation firstname-->
                      <div class="invalid-feedback" *ngIf="form.get('contact.firstname').errors">
@@ -34,7 +35,8 @@
                             formControlName="lastname"
                             class="form-control"
                             placeholder="Last name"
-                            [ngClass]="{'is-invalid': form.get('contact.lastname').errors}"/>
+                            [ngClass]="{'is-invalid': form.get('contact.lastname').errors}"
+                            data-toggle="tooltip" data-placement="top" title="You can type the last name."/>
 
                      <!-- Showing messages valitation lastname-->
                      <div class="invalid-feedback" *ngIf="form.get('contact.lastname').errors">
@@ -54,7 +56,8 @@
                             class="form-control"
                             [(ngModel)]="modelWithValue"
                             [textMask]="{mask: mask}"
-                            [ngClass]="{'is-invalid': form.get('contact.phone').errors}"/>
+                            [ngClass]="{'is-invalid': form.get('contact.phone').errors}"
+                            data-toggle="tooltip" data-placement="top" title="You can type your phone number."/>
 
                    </div>
 
@@ -64,7 +67,8 @@
                             formControlName="email"
                             class="form-control"
                             placeholder="Email"
-                            [ngClass]="{'is-invalid': form.get('contact.email').errors}"/>
+                            [ngClass]="{'is-invalid': form.get('contact.email').errors}"
+                            data-toggle="tooltip" data-placement="top" title="You can type your email."/>
 
                      <!-- Showing messages valitation email-->
                      <div class="invalid-feedback" *ngIf="form.get('contact.email').errors">
@@ -81,7 +85,8 @@
                             formControlName="subject"
                             class="form-control"
                             placeholder="Subject"
-                            [ngClass]="{'is-invalid': form.get('contact.subject').errors}"/>
+                            [ngClass]="{'is-invalid': form.get('contact.subject').errors}"
+                            data-toggle="tooltip" data-placement="top" title="You can type the subject."/>
 
                      <!-- Showing messages valitation subject-->
                      <div class="invalid-feedback" *ngIf="form.get('contact.subject').errors">
@@ -99,7 +104,8 @@
                                 formControlName="message"
                                 class="form-control"
                                 placeholder="Message"
-                                [ngClass]="{'is-invalid': form.get('contact.message').errors}"></textarea>
+                                [ngClass]="{'is-invalid': form.get('contact.message').errors}"
+                                data-toggle="tooltip" data-placement="top" title="You can type the bof."></textarea>
 
                      <!-- Showing messages valitation message-->
                      <div class="invalid-feedback" *ngIf="form.get('contact.message').errors">
@@ -109,8 +115,8 @@
                      </div>
                    </div>
 
+                   <a href="/home" class="btn btn-primary" (click)="onGoHome();">Cancel</a>
                    <button [disabled]="form.invalid" class="btn btn-success"> Save</button>
-                   <a href="/home" class="btn btn-primary">Cancel</a>
 
                    <!--<a href="/login" class="btn">Cancel</a>-->
                  </div>

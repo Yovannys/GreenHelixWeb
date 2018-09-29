@@ -44,6 +44,10 @@ export class ContactoComponent {
     return this.form.get(`contact.${field}`).hasError('required');
   }
 
+  onGoHome(){
+    localStorage.removeItem('profileid');
+  }
+
   onSubmit(event: Event){
     //para detener el submit
     event.preventDefault();

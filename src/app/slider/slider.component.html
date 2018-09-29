@@ -1,41 +1,32 @@
 <!--Slider-->
+<!--d-flex class align horizontally blocks (p, div, etc). By default the alignment is vertically-->
 <div class="container-fluid slide d-flex flex-column justify-content-center align-items-center">
   <div class="text-center">
-    <h1 class="display">WELCOME to Green Helix</h1>
-    <p class="lead text-justify hidden-xs-down">
-      This is a place where business owners related to cleaning, garden hygiene, fumigation and sanitation among other services, can share and exchange their works.
+    <!--d-none d-md-block classes: hide in sm and show in md-->
+    <h1 class="display d-none d-md-block">WELCOME to Power Business GO</h1>
+    <p class="lead text-justify d-none d-md-block">
+      This is a place where the small business owners, can share and exchange their works. You can also setting up your profile and uploads some
+      pictures related your preference works.
       To start using the site, you can sign up and start uploading your works.
     </p>
   </div>
+
+  <!--form init-->
+
   <form [formGroup] = "form" (ngSubmit)="onSubmit($event)" class="form-inline text-center d-flex flex-column flex-sm-row">
+     <div class="form-group mr-3" formGroupName="searchprofile">
+        <input id="crit"
+              formControlName="crit"
+              class="form-control"
+              placeholder="Search anything"
+              [ngClass]="{'is-invalid': form.get('searchprofile.crit').errors}"/>
+     </div>
 
-      <div class="form-group-fields" formGroupName="searchprofile">
-        <div class="form-group">
-          <table>
-            <tr>
-               <td>
-
-                 <input id="crit"
-                        formControlName="crit"
-                        class="form-control"
-                        placeholder="Serch anything"
-                        [ngClass]="{'is-invalid': form.get('searchprofile.crit').errors}"/>
-
-               </td>
-               <td width="10px"></td>
-               <td>
-                 <input type="submit" [disabled]="form.invalid" class="btn btn-secondary" value="Search">
-               </td>
-            </tr>
-          </table>
-
-        </div>
-
+     <div class="form-group">
+       <input type="submit" [disabled]="form.invalid" class="btn btn-secondary" value="Search">
     </div>
-
   </form>
 
-
-
+  <!--form end-->
 
 </div>

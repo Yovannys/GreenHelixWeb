@@ -1,0 +1,75 @@
+<div class="container container-fluid" style="margin-top: 120px">
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div>
+
+      <h4 align="le"><small> <strong>COMMENTS</strong> </small></h4>
+      <hr>
+
+      <!-- Posts loop-->
+
+        <article *ngFor="let item of dataPost;let i = index">
+           <div class="row mb-4">
+             <div class="col-sm-2 d-none d-md-block">
+                  <figure>
+                    <img  src="../../assets/avatar.png"
+                          class="img-fluid"
+                          height="100"
+                          width="100"/>
+                    <figcaption>{{item.username}}</figcaption>
+                  </figure>
+             </div>
+
+             <div class="col-sm-10">
+               <div class="card" [ngClass]="(i%2 === 0)?'border-dark':'border-primary'">
+                 <div class="card-body" [ngClass]="(i%2 === 0)?'text-dark':'text-primary'" [innerHTML]="item.post"></div>
+               </div>
+             </div>
+           </div>
+        </article>
+
+      <!--end Posts loop-->
+
+      <!--form post-->
+
+       <div class="d-flex p-2 justify-content-center" *ngIf="this.sessionProfileId ">
+
+         <form [formGroup] = "form" (ngSubmit)="onSubmit($event)">
+           <div class="form-group-fields" formGroupName="post">
+
+             <div class="form-group">
+               <label for="message">Post:</label>
+               <textarea  id="message"
+                          cols="80"
+                          rows="4"
+                          formControlName="message"
+                          class="form-control"
+                          placeholder="Message"
+                          [ngClass]="{'is-invalid': form.get('post.message').errors}"
+                          data-toggle="tooltip" data-placement="top" title="You can type the bof."></textarea>
+
+               <!-- Showing messages valitation message-->
+               <div class="invalid-feedback" *ngIf="form.get('post.message').errors">
+
+                 <div *ngIf="isRequired('message')">Message is required.</div>
+
+               </div>
+             </div>
+
+             <a href="/home" class="btn btn-primary" (click)="onGoHome();">Cancel</a>
+             <button [disabled]="form.invalid" class="btn btn-success"> Save</button>
+
+             <!--<a href="/login" class="btn">Cancel</a>-->
+           </div>
+
+         </form>
+       </div>
+
+      <br>
+      <ng2-toasty></ng2-toasty>
+
+      <!--End form post-->
+
+    </div>
+  </div>
+</div>

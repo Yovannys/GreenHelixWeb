@@ -6,3 +6,13 @@
 .nav-item > a:link{
   color: black;
 }
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+/*.img-responsive {*/
+  /*height:  auto;*/
+  /*display: block;*/
+  /*max-width: 100%;*/
+/*}*/

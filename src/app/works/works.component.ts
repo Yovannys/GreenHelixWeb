@@ -5,6 +5,7 @@ import {AuthenticationService} from "../service/authentication.service";
 import {FormBuilder} from "@angular/forms";
 import {UserProfileService} from "../service/user-profile.service";
 import {LoadImagesService} from "../service/load-images.service";
+import {ComunicateService} from "../service/comunicate.service";
 
 @Component({
   selector: 'app-works',
@@ -22,7 +23,8 @@ export class WorksComponent implements OnInit, OnDestroy {
               public _authenticationService: AuthenticationService,
               private _formBuilder: FormBuilder,
               private _userProfileService: UserProfileService,
-              private _loadImagesService : LoadImagesService
+              private _loadImagesService : LoadImagesService,
+              public _comunicate: ComunicateService
   ) {
 
   }
@@ -140,10 +142,37 @@ export class WorksComponent implements OnInit, OnDestroy {
 
 
 
+  onValidateShowHome(){
+
+    let item = localStorage.getItem('userProfile');
+    let data = JSON.parse(item); //var test is now re-loaded!
+
+    const accessToken = localStorage.getItem('access_token');
+    this._userProfileService.onValidateShowHome(Number(data.id), accessToken).subscribe(
+      (data) => {
+        // console.log("Saliendo del boton");
+        // fire a notification
+        this._comunicate.onvalidateWorkCompleted.emit(true);
+
+      },
+      err => {
+
+        console.error(err);
+        //Go to 404
+        this._router.navigate(['/']);
+      },
+      () => {});
+
+
+
+  }
+
   ngOnDestroy(){
     if (this.filesave){
       this._loadImagesService.fileSaved.unsubscribe();
     }
+
+   this.onValidateShowHome();
 
   }
 

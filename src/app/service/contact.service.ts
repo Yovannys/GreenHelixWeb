@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {Config} from '../config';
 import {Contact} from "../models/Contact";
+import {RequestServices} from "../models/RequestServices";
 
 @Injectable()
 export class ContactService {
@@ -16,5 +17,10 @@ export class ContactService {
    public sendContact(contact: Contact): Observable<Response> {
     const url = `${this.apiBaseURL}/api/contact/sendContact`;
     return this._http.post(url, contact);
+  }
+
+  public sendRequestServices(requestServices: RequestServices): Observable<Response> {
+    const url = `${this.apiBaseURL}/api/requestServices/sendRequestServices`;
+    return this._http.post(url, requestServices);
   }
 }

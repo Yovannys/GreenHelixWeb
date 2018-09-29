@@ -1,3 +1,8 @@
 .jumbotron{
   background-color: white;
 }
+
+/*::ng-deep my-date-picker  input*/
+/*{*/
+  /*margin: 10px;*/
+/*}*/

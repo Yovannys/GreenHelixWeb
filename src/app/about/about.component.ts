@@ -12,4 +12,8 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
   }
 
+  onGoHome(){
+    localStorage.removeItem('profileid');
+  }
+
 }

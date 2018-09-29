@@ -1,0 +1,203 @@
+<div class="container container-fluid" style="margin-top: 115px; margin-left: 3px">
+
+  <div class="d-flex justify-content-center align-items-center">
+
+       <div class="row">
+
+           <!--profile-->
+          <div class="col-12 col-md-4">
+            <h4 align="le"><small> <strong>OWNER:</strong> </small></h4>
+
+            <div *ngIf="onUserReqServ!=null">
+              <div class="card">
+                <img *ngIf="onUserReqServ.picture!=null && onUserReqServ.picture!=''" class=" img-fluid card-img-top" [src]="onUserReqServ.picture" alt="Card image">
+                <img *ngIf="onUserReqServ.picture==null" class=" img-fluid card-img-top" src="../../assets/avatar.png" alt="Card image">
+                <div class="card-body">
+                  <h4 class="card-title">{{onUserReqServ.firstname +' '+onUserReqServ.lastname}}</h4>
+                  <p class="card-text">{{ onUserReqServ.profile.phone}}</p>
+                  <p class="card-text">{{ onUserReqServ.profile.address}}</p>
+                  <p class="card-text" *ngIf="onUserReqServ.profile.anotherServices!=null && onUserReqServ.profile.anotherServices!=''"><strong>Service(s):</strong></p>
+                  <div  *ngIf="onUserReqServ.profile.anotherServices!=null && onUserReqServ.profile.anotherServices!=''" class="card-text" [innerHTML]="onUserReqServ.profile.anotherServices"></div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!--form-->
+          <div class="col-12 col-md-6">
+
+            <h4 align="le"><small> <strong>SCHEDULE A ORDER: </strong><strong><span class="red-color">{{this.profileTitleRequestService | uppercase}}</span></strong></small></h4>
+            <hr>
+            <form [formGroup] = "form" (ngSubmit)="onSubmit($event)" class="">
+              <div class="form-group-fields" formGroupName="requestContact">
+
+                <!--first name-->
+
+                <div class="form-group">
+                  <label for="firstname">First Name:</label>
+                  <input id="firstname"
+                         formControlName="firstname"
+                         class="form-control"
+                         placeholder="First name"
+                         [ngClass]="{'is-invalid': form.get('requestContact.firstname').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type the first name."/>
+
+                  <!-- Showing messages valitation firstname-->
+                  <div class="invalid-feedback" *ngIf="form.get('requestContact.firstname').errors">
+
+                    <div *ngIf="isRequired('firstname')">First Name is required.</div>
+                    <div *ngIf="form.get('requestContact.firstname').hasError('minlength')">At least 2 characters.</div>
+                    <div *ngIf="form.get('requestContact.firstname').hasError('maxlength')">Until 35 characters.</div>
+                    <div *ngIf="form.get('requestContact.firstname').errors?.pattern">Only alphanumerics characters.</div>
+
+                  </div>
+
+                </div>
+
+                <!--last name-->
+
+                <div class="form-group">
+                  <label for="lastname">Last Name:</label>
+                  <input id="lastname"
+                         formControlName="lastname"
+                         class="form-control"
+                         placeholder="Last name"
+                         [ngClass]="{'is-invalid': form.get('requestContact.lastname').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type the last name."/>
+
+                  <!-- Showing messages valitation lastname-->
+                  <div class="invalid-feedback" *ngIf="form.get('requestContact.lastname').errors">
+
+                    <div *ngIf="isRequired('lastname')">First Name is required.</div>
+                    <div *ngIf="form.get('requestContact.lastname').hasError('minlength')">At least 2 characters.</div>
+                    <div *ngIf="form.get('requestContact.lastname').hasError('maxlength')">Until 35 characters.</div>
+                    <div *ngIf="form.get('requestContact.lastname').errors?.pattern">Only alphanumerics characters.</div>
+
+                  </div>
+                </div>
+
+                <!--Phone-->
+
+                <div class="form-group">
+                  <label for="phone">Phone:</label>
+                  <input id="phone"
+                         formControlName="phone"
+                         class="form-control"
+                         [(ngModel)]="modelWithValue"
+                         [textMask]="{mask: mask}"
+                         [ngClass]="{'is-invalid': form.get('requestContact.phone').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type your phone number."/>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input id="email"
+                         formControlName="email"
+                         class="form-control"
+                         placeholder="Email"
+                         [ngClass]="{'is-invalid': form.get('requestContact.email').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type your email."/>
+
+                  <!-- Showing messages valitation email-->
+                  <div class="invalid-feedback" *ngIf="form.get('requestContact.email').errors">
+
+                    <div *ngIf="isRequired('email') || form.get('requestContact.email').hasError('email')">Email address is required and valid.</div>
+
+
+                  </div>
+                </div>
+
+                <!--Services-->
+
+                <div class="form-group">
+                  <label for="myservice">Services:</label>
+                  <app-ngx-editor [placeholder]="'Enter text here...'"
+                                  id="myservice"
+                                  [spellcheck]="true"
+                                  height="100px"
+                                  minHeight="50px"
+                                  formControlName="myservice"
+                                  [ngClass]="{'is-invalid': form.get('requestContact.myservice').errors}"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="You can type other services you offer."></app-ngx-editor>
+
+                  <div class="ngx-editor-message" *ngIf="form.get('requestContact.myservice').errors?.required">
+                    <span style="color: red;font-size: small">Services is required!</span>
+                  </div>
+
+                </div>
+
+                <!--Address-->
+
+                <div class="form-group">
+                  <label for="address">Address:</label>
+                  <input id="address"
+                         formControlName="address"
+                         class="form-control"
+                         placeholder="You can type any area (city, state, full address) you work."
+                         [ngClass]="{'is-invalid': form.get('requestContact.address').errors}"
+                         data-toggle="tooltip" data-placement="top" title="You can type any area (city, state, full address) you work."/>
+
+                  <!-- Showing messages valitation firstname-->
+                  <div class="invalid-feedback" *ngIf="form.get('requestContact.address').errors">
+
+                    <div *ngIf="form.get('requestContact.address').errors?.pattern">Only alphanumerics characters.</div>
+
+                  </div>
+
+                </div>
+
+                <!--Date-->
+
+                <div class="form-group">
+                  <label for="myDate">Date:</label>
+
+                  <my-date-picker id="myDate"
+                                  name="mydate"
+                                  formControlName="myDate"
+                                  [options]="myDatePickerOptions"
+                                  #mydp="mydatepicker"
+                                  required
+                                  (dateChanged)="onDateChanged($event)"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="You can select the date of sign.">
+                  </my-date-picker>
+
+                  <!-- Showing messages valitation title-->
+
+                  <div>
+                    <p *ngIf="form.invalid">
+                      <span style="color: red;font-size: small">Date is required!</span>
+                    </p>
+                  </div>
+
+                </div>
+
+                <a href="/home" class="btn btn-primary">Cancel</a>
+                <button [disabled]="form.invalid" class="btn btn-success">Send</button>
+
+                <!--<a href="/login" class="btn">Cancel</a>-->
+              </div>
+
+              <!-- Check form-->
+              <!--Validation Form Status :-->
+              <!--{{ form.valid}}-->
+
+
+
+            </form>
+
+          </div>
+
+       </div>
+
+    <br>
+    <ng2-toasty></ng2-toasty>
+
+  </div>
+</div>

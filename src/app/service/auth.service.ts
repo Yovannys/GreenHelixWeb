@@ -31,8 +31,8 @@ AuthService {
     domain: 'tructrack.auth0.com',
     responseType: 'token id_token',
     audience: 'https://tructrack.auth0.com/userinfo',
-    //redirectUri: 'http://localhost:4200/home',
     redirectUri: 'http://localhost:8080/home',
+    //redirectUri: 'http://142.93.92.179:8080/greenHelixGarden/home',
     scope: 'openid profile'
   });
 
@@ -119,6 +119,7 @@ AuthService {
       this.user.email = profile.nickname+"@gmail.com";
       this.user.tipoUsuario = 2;
       this.user.token = accessToken;
+      this.user.picture = profile.picture;
 
       this._authenticationService.getBackEndProfile(this.user,accessToken).subscribe(
         (data) => {

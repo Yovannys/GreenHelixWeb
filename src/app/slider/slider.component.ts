@@ -11,10 +11,6 @@ import {ComunicateService} from "../service/comunicate.service";
 })
 export class SliderComponent implements OnInit{
 
-
-
-
-
   dataProf:any;
 
   form = this._formBuilder.group( {
@@ -52,7 +48,9 @@ export class SliderComponent implements OnInit{
      err => {
      console.error(err);
      },
-     () => {});
+     () => {
+       console.log("subscrito");
+     });
 
   }
 

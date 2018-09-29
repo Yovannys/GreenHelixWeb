@@ -10,6 +10,5 @@ export class Users{
   public token: string;
   public username: string;
   public profile: Profile;
-
-
+  public picture: string;
 }
